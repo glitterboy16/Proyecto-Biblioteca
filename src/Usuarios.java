@@ -1,20 +1,20 @@
 public class Usuarios {
     private String nombreUsuario;
-    private String contraseña;
+    private String contrasena;
     private TipoUsuario tipoUsuario;
     
 
 
     public Usuarios() {
         nombreUsuario = "Manuel";
-        contraseña = "123456789";
+        contrasena = "123456789";
         tipoUsuario = TipoUsuario.USER;
     }
 
 
     public Usuarios(String nombreUsuario, String contraseña, TipoUsuario tipoUsuario) {
         this.nombreUsuario = nombreUsuario;
-        this.contraseña = contraseña;
+        this.contrasena = contraseña;
         this.tipoUsuario = tipoUsuario;
     }
 
@@ -25,11 +25,11 @@ public class Usuarios {
         this.nombreUsuario = nombreUsuario;
     }
     
-    public String getContraseña() {
-        return contraseña;
+    public String getContrasena() {
+        return contrasena;
     }
-    public void setContraseña(String contraseña) {
-        this.contraseña = contraseña;
+    public void setContrasena(String contraseña) {
+        this.contrasena = contraseña;
     }
 
     public TipoUsuario getTipoUsuario() {
@@ -43,7 +43,7 @@ public class Usuarios {
     public String toString() {
         return "{" +
                 " titulo='" + getNombreUsuario() + "'" +
-                ", autor='" + getContraseña() + "'" +
+                ", autor='" + getContrasena() + "'" +
                 ", generoMusical='" + getTipoUsuario() + "'" +
                 "}";
     }

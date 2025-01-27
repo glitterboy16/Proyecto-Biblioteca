@@ -1,5 +1,5 @@
 import java.util.Scanner;
-public class App {
+public class Biblioteca {
     public static final Scanner sc = new Scanner(System.in);
     public static void main(String[] args) throws Exception {
         menuPrincipal();
@@ -8,7 +8,7 @@ public class App {
     public static void menuPrincipal(){
         int opcion;
             do{
-                System.out.println(manu());
+                System.out.println(menu());
                 opcion = sc.nextInt();
                 switch(opcion){
                     case 1 -> System.out.println("Iniciar como Usuario");
@@ -19,7 +19,7 @@ public class App {
             }while(opcion !=2);     
     }
 
-    public static String manu(){
+    public static String menu(){
         String tVerde = "\u001B[32m";
         String fBlanco = "\u001B[32;40m";
         String reset = "\u001B[0m";
