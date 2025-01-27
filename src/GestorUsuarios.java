@@ -16,9 +16,7 @@ public class GestorUsuarios {
     }
 
     public static void consultaUsuarios(){
-        for (int i = 0; i < usuarios.length; i++) {
-            
-        }
+        
     }
 
 }
