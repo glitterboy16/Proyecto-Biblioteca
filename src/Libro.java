@@ -80,4 +80,6 @@ public class Libro {
     public String toString(){
         return "Titulo: " + titulo + "\nAutor: " + autor + "\nCategoria: " + categoria;
     }
+
+    //Gestion de libros
 }
