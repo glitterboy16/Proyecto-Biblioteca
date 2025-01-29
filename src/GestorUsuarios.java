@@ -1,8 +1,7 @@
 public class GestorUsuarios {
-    private Usuarios [] usuarios;
-    private TipoUsuario tipoUsuario;
+    private static Usuarios [] usuarios;
     private static final int tam = 100;
-    private int lleno;
+    private static int lleno;
     
     public GestorUsuarios(){
         usuarios = new Usuarios[tam];
@@ -10,20 +9,17 @@ public class GestorUsuarios {
     }
 
     public void usuarioNuevo(Usuarios us){
-        if(this.tipoUsuario==TipoUsuario.ADMIN){
-            if (lleno<tam) {
-                usuarios[lleno] = us;
-                lleno++;
-            }
-        }else{
-            System.out.println("No tienes permiso para crear un usuario.");
+        if (lleno<tam) {
+            usuarios[lleno] = us;
+            System.out.println("Se ha añadidido user"+ usuarios[lleno].getNombreUsuario());
+            lleno++;
         }
     }
 
-    private int buscarIndiceUsuarios(String nombre) {
+    public int buscarIndiceUsuarios(String nombre) {
         int buscar = -1;
         for (int i = 0; i < lleno && buscar == -1; i++) {
-            if (usuarios[i].getNombreUsuario().equals(nombre)) {
+            if (this.usuarios[i].getNombreUsuario().equals(nombre)) {
                 buscar = i;
             }
         }
@@ -36,6 +32,14 @@ public class GestorUsuarios {
             buscar = usuarios[indice];
         }
         return buscar;
+    }
+    public Usuarios inicioSesionUsuarios(String nombreUsuario, String contrasena){
+        Usuarios usuario = buscarNombreUsuario(nombreUsuario);
+        System.out.println("usuario:"+ usuario);
+        if(usuario != null && usuario.getContrasena().equals(contrasena)){
+            return usuario;
+        }
+        return null;
     }
 
     public static String toString(Usuarios[] arrayUsuarios){

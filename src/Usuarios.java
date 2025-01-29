@@ -7,8 +7,8 @@ public class Usuarios {
 
     public Usuarios() {
         nombreUsuario = "Manuel";
-        contrasena = "123456789";
-        tipoUsuario = TipoUsuario.USER;
+        contrasena = "1234";
+        tipoUsuario = TipoUsuario.ADMIN;
     }
 
 
@@ -42,9 +42,9 @@ public class Usuarios {
     @Override
     public String toString() {
         return "{" +
-                " titulo='" + getNombreUsuario() + "'" +
-                ", autor='" + getContrasena() + "'" +
-                ", generoMusical='" + getTipoUsuario() + "'" +
+                " Nombre='" + getNombreUsuario() + "'" +
+                ", Contraseña='" + getContrasena() + "'" +
+                ", TipoUsuario='" + getTipoUsuario() + "'" +
                 "}";
     }
     
