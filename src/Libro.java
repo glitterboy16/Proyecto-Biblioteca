@@ -7,6 +7,7 @@ public class Libro {
     private String titulo;
     private String autor;
     private Categoria categoria;
+    private EstadoLibro estado;
 
 
     /**
@@ -20,6 +21,7 @@ public class Libro {
             this.titulo = titulo;
             this.autor = autor;
             this.categoria = categoria;
+            this.estado = EstadoLibro.DISPONIBLE;
     }
 
     /**
