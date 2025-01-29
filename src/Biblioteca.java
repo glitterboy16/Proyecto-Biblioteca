@@ -157,12 +157,10 @@ public class Biblioteca {
                             + "Elija una opción:\n" + reset;
         return menu;
     }
-<<<<<<< HEAD
-
     public static String menuUser(){
 =======
     public static String ImprimirMenuUser(){
->>>>>>> RamaIntermedia-Rodas
+
         String tVerde = "\u001B[32m";
         String fBlanco = "\u001B[32;40m";
         String reset = "\u001B[0m";
