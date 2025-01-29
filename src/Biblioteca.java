@@ -7,15 +7,14 @@ public class Biblioteca {
         gestor.usuarioNuevo(new Usuarios("Pablo", "1234", TipoUsuario.ADMIN));
         gestor.usuarioNuevo(new Usuarios("Jose", "1234", TipoUsuario.USER));
         gestor.usuarioNuevo(new Usuarios("Marta", "rodasbichogrande", TipoUsuario.USER));
-        System.out.println(menuAdmin());
-        //menuPrincipal(gestor);
+        menuPrincipal(gestor);
     }
 
     public static void menuPrincipal(GestorUsuarios gestor){
         int opcion;
             do{
                 System.out.println(menu());
-                opcion = sc.nextInt();
+                opcion = Integer.parseInt(sc.nextLine());
                 switch(opcion){
                     case 1 -> menuInicioSesion(gestor);
                     case 2 -> System.out.println("Saliendo del programa..."+
@@ -42,7 +41,6 @@ public class Biblioteca {
     }
     
     public static void menuInicioSesion(GestorUsuarios gestor){
-        sc.nextLine();
         System.out.println("Dame tu nombre de usuario");
         String nombreini = sc.nextLine();
         System.out.println("Dime tu contraseña");
@@ -50,22 +48,22 @@ public class Biblioteca {
         Usuarios usuinisesion = gestor.inicioSesionUsuarios(nombreini, contrasenaini);
         if (usuinisesion!=null) {
             if (usuinisesion.getTipoUsuario()==TipoUsuario.ADMIN) {
-                System.out.println(menuAdmin());
+                System.out.println(ImprimirMenuAdmin());
             }else{
-                System.out.println(menuUser());
+                System.out.println(ImprimirMenuUser());
             }
         }else{
             System.out.println("ta mal");
         }
     }
 
-    public static String menuAdmin(){
+    public static String ImprimirMenuAdmin(){
         String tVerde = "\u001B[32m";
         String fBlanco = "\u001B[32;40m";
         String reset = "\u001B[0m";
         String menu= tVerde +"-----------------------------------------------------------------\n"
                             + "|                                                              |\n"
-                            + "|      "+fBlanco+"Bienvenido a tus posibilidades como Usuario" + reset + tVerde+"             |\n"
+                            + "|      "+fBlanco+"Bienvenido a tus posibilidades como Admin" + reset + tVerde+"               |\n"
                             + "|                                                              |\n"
                             + "|--------------------------------------------------------------|\n"
                             + "|      1. Buscar libros                                        |\n" 
@@ -84,7 +82,7 @@ public class Biblioteca {
         return menu;
     }
 
-    public static String menuUser(){
+    public static String ImprimirMenuUser(){
         String tVerde = "\u001B[32m";
         String fBlanco = "\u001B[32;40m";
         String reset = "\u001B[0m";
