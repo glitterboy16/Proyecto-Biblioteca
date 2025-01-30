@@ -55,7 +55,6 @@ public class Biblioteca {
             }
         }while(opcion !=2);     
     }
-
     public static String menu(){
         String tVerde = "\u001B[32m";
         String fBlanco = "\u001B[32;40m";
@@ -143,7 +142,7 @@ public class Biblioteca {
                     String titulo = sc.nextLine();
                     System.out.println("Dime el autor");
                     String autor = sc.nextLine();
-                    System.out.println("Dime la categoria");
+                    System.out.println("Dime la categoria en mayusculas");
                     String categoria = sc.nextLine();
                     if (categoria.equals("FICCION")) {
                         biblioteca.getGestorLibros().nuevoLibro(new Libro(titulo, autor, Categoria.FICCION, EstadoLibro.DISPONIBLE));
@@ -209,7 +208,7 @@ public class Biblioteca {
                     String nombre = sc.nextLine();
                     System.out.println("Dime la contraseña");
                     String contrasena = sc.nextLine();
-                    System.out.println("Dime el tipo de usuario");
+                    System.out.println("Dime el tipo de usuario en mayusculas");
                     String tipo = sc.nextLine();
                     if (tipo.equals("ADMIN")) {
                         biblioteca.getGestor().usuarioNuevo(new Usuarios(nombre, contrasena, TipoUsuario.ADMIN));
@@ -291,7 +290,6 @@ public class Biblioteca {
             }
         }while(opcion !=4); 
     }
-
     public void mostrarTodosLibrosDisponibles(GestorLibros gestorLibros){ 
         Libro[] libros = gestorLibros.getLibrosArray(); 
     
