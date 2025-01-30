@@ -23,15 +23,14 @@ public class Biblioteca {
 
     public static void main(String[] args) throws Exception {
         Biblioteca biblioteca = new Biblioteca(new GestorUsuarios(), new GestorLibros());
-        //biblioteca.menuPrincipal(biblioteca.gestor);
-        //biblioteca.menuBuscarLibros(biblioteca.gestorLibros); 
-        biblioteca.mostrarTodosLibrosDisponibles(biblioteca.gestorLibros);
+
+        
         biblioteca.getGestorLibros().nuevoLibro(new Libro("El senor de los anillos", "J.R.R. Tolkien", Categoria.FANTASIA, EstadoLibro.DISPONIBLE));
         biblioteca.getGestorLibros().nuevoLibro(new Libro("El hobbit", "J.R.R. Tolkien", Categoria.FANTASIA, EstadoLibro.DISPONIBLE));
         biblioteca.getGestorLibros().nuevoLibro(new Libro("El codigo da vinci", "Dan Brown", Categoria.TERROR, EstadoLibro.DISPONIBLE));
         biblioteca.getGestorLibros().nuevoLibro(new Libro("El alquimista", "Paulo Coelho", Categoria.AUTOAYUDA, EstadoLibro.DISPONIBLE));
         biblioteca.getGestorLibros().nuevoLibro(new Libro("El principito", "Antoine de Saint-Exupery", Categoria.INFANTIL, EstadoLibro.DISPONIBLE));
-        biblioteca.getGestorLibros().nuevoLibro(new Libro("Cien años de soledad", "Gabriel Garcia Marquez", Categoria.FICCION, EstadoLibro.DISPONIBLE));
+        biblioteca.getGestorLibros().nuevoLibro(new Libro("Cien anios de soledad", "Gabriel Garcia Marquez", Categoria.FICCION, EstadoLibro.DISPONIBLE));
         biblioteca.getGestorLibros().nuevoLibro(new Libro("Don Quijote de la Mancha", "Miguel de Cervantes", Categoria.HISTORIA, EstadoLibro.DISPONIBLE));
         biblioteca.getGestorLibros().nuevoLibro(new Libro("La sombra del viento", "Carlos Ruiz Zafon", Categoria.MISTERIO, EstadoLibro.DISPONIBLE));
         biblioteca.getGestorLibros().nuevoLibro(new Libro("El nombre del viento", "Patrick Rothfuss", Categoria.FANTASIA, EstadoLibro.DISPONIBLE));
@@ -40,6 +39,8 @@ public class Biblioteca {
         biblioteca.getGestor().usuarioNuevo(new Usuarios("Pablo", "1234", TipoUsuario.ADMIN));
         biblioteca.getGestor().usuarioNuevo(new Usuarios("Jose", "1234", TipoUsuario.USER));
         biblioteca.getGestor().usuarioNuevo(new Usuarios("Marta", "rodasbichogrande", TipoUsuario.USER));
+
+        biblioteca.menuPrincipal(biblioteca.getGestor());
     }
 
     public void menuPrincipal(GestorUsuarios gestor){
@@ -121,7 +122,10 @@ public class Biblioteca {
         Usuarios usuinisesion = gestor.inicioSesionUsuarios(nombreini, contrasenaini);
         if (usuinisesion!=null) {
             if (usuinisesion.getTipoUsuario()==TipoUsuario.ADMIN) {
-                System.out.println(ImprimirMenuAdmin());
+            
+            Biblioteca biblioteca = new Biblioteca(gestor, new GestorLibros());
+            
+            menuAdmin(biblioteca, null);
             }else{
                 System.out.println(ImprimirMenuUser());
             }
@@ -132,78 +136,14 @@ public class Biblioteca {
     public static void menuAdmin(Biblioteca biblioteca, Libro libro){
         int opcion;
         do{
-            System.out.println(menu());
+            System.out.println(ImprimirMenuAdmin());
             opcion = Integer.parseInt(sc.nextLine());
             switch(opcion){
                 case 1 -> System.out.println();
                 case 2 -> System.out.println();
                 case 3 -> System.out.println();
-                case 4 -> {
-                    System.out.println("Dime el titulo");
-                    String titulo = sc.nextLine();
-                    System.out.println("Dime el autor");
-                    String autor = sc.nextLine();
-                    System.out.println("Dime la categoria");
-                    String categoria = sc.nextLine();
-                    if (categoria.equals("FICCION")) {
-                        biblioteca.getGestorLibros().nuevoLibro(new Libro(titulo, autor, Categoria.FICCION, EstadoLibro.DISPONIBLE));
-                    }else if (categoria.equals("AVENTURA")) {
-                        biblioteca.getGestorLibros().nuevoLibro(new Libro(titulo, autor, Categoria.AVENTURA, EstadoLibro.DISPONIBLE));
-                    }else if (categoria.equals("FANTASIA")) {
-                        biblioteca.getGestorLibros().nuevoLibro(new Libro(titulo, autor, Categoria.FANTASIA, EstadoLibro.DISPONIBLE));
-                    }else if (categoria.equals("CIENCIA_FICCION")) {
-                        biblioteca.getGestorLibros().nuevoLibro(new Libro(titulo, autor, Categoria.CIENCIA_FICCION, EstadoLibro.DISPONIBLE));
-                    }else if (categoria.equals("ROMANCE")) {
-                        biblioteca.getGestorLibros().nuevoLibro(new Libro(titulo, autor, Categoria.ROMANCE, EstadoLibro.DISPONIBLE));
-                    }else if (categoria.equals("TERROR")) {
-                        biblioteca.getGestorLibros().nuevoLibro(new Libro(titulo, autor, Categoria.TERROR, EstadoLibro.DISPONIBLE));
-                    }else if (categoria.equals("MISTERIO")) {
-                        biblioteca.getGestorLibros().nuevoLibro(new Libro(titulo, autor, Categoria.MISTERIO, EstadoLibro.DISPONIBLE));
-                    }else if (categoria.equals("BIOGRAFIA")) {
-                        biblioteca.getGestorLibros().nuevoLibro(new Libro(titulo, autor, Categoria.BIOGRAFIA, EstadoLibro.DISPONIBLE));
-                    }else if (categoria.equals("HISTORIA")) {
-                        biblioteca.getGestorLibros().nuevoLibro(new Libro(titulo, autor, Categoria.HISTORIA, EstadoLibro.DISPONIBLE));
-                    }else if (categoria.equals("POESIA")) {
-                        biblioteca.getGestorLibros().nuevoLibro(new Libro(titulo, autor, Categoria.POESIA, EstadoLibro.DISPONIBLE));
-                    }else if (categoria.equals("HUMOR")) {
-                        biblioteca.getGestorLibros().nuevoLibro(new Libro(titulo, autor, Categoria.HUMOR, EstadoLibro.DISPONIBLE));
-                    }else if (categoria.equals("AUTOAYUDA")) {
-                        biblioteca.getGestorLibros().nuevoLibro(new Libro(titulo, autor, Categoria.AUTOAYUDA, EstadoLibro.DISPONIBLE));
-                    }else if (categoria.equals("FILOSOFIA")) {
-                        biblioteca.getGestorLibros().nuevoLibro(new Libro(titulo, autor, Categoria.FILOSOFIA, EstadoLibro.DISPONIBLE));
-                    }else if (categoria.equals("DRAMA")) {
-                        biblioteca.getGestorLibros().nuevoLibro(new Libro(titulo, autor, Categoria.DRAMA, EstadoLibro.DISPONIBLE));
-                    }else if (categoria.equals("RELIGION")) {
-                        biblioteca.getGestorLibros().nuevoLibro(new Libro(titulo, autor, Categoria.RELIGION, EstadoLibro.DISPONIBLE));
-                    }else if (categoria.equals("POLICIACO")) {
-                        biblioteca.getGestorLibros().nuevoLibro(new Libro(titulo, autor, Categoria.POLICIACO, EstadoLibro.DISPONIBLE));
-                    }else if (categoria.equals("INFANTIL")) {
-                        biblioteca.getGestorLibros().nuevoLibro(new Libro(titulo, autor, Categoria.INFANTIL, EstadoLibro.DISPONIBLE));
-                    }else if (categoria.equals("JUVENIL")) {
-                        biblioteca.getGestorLibros().nuevoLibro(new Libro(titulo, autor, Categoria.JUVENIL, EstadoLibro.DISPONIBLE));
-                    }else if (categoria.equals("HISTORICO")) {
-                        biblioteca.getGestorLibros().nuevoLibro(new Libro(titulo, autor, Categoria.HISTORICO, EstadoLibro.DISPONIBLE));
-                    }else if (categoria.equals("THRILLER")) {
-                        biblioteca.getGestorLibros().nuevoLibro(new Libro(titulo, autor, Categoria.THRILLER, EstadoLibro.DISPONIBLE));
-                    }else if (categoria.equals("DISTOPIA")) {
-                        biblioteca.getGestorLibros().nuevoLibro(new Libro(titulo, autor, Categoria.DISTOPIA, EstadoLibro.DISPONIBLE));
-                    }else if (categoria.equals("ENSAYO")) {
-                        biblioteca.getGestorLibros().nuevoLibro(new Libro(titulo, autor, Categoria.ENSAYO, EstadoLibro.DISPONIBLE));
-                    }else if (categoria.equals("EROTICO")) {
-                        biblioteca.getGestorLibros().nuevoLibro(new Libro(titulo, autor, Categoria.EROTICO, EstadoLibro.DISPONIBLE));
-                    }else if (categoria.equals("COCINA")) {
-                        biblioteca.getGestorLibros().nuevoLibro(new Libro(titulo, autor, Categoria.COCINA, EstadoLibro.DISPONIBLE));
-                    }else if (categoria.equals("VIAJES")) {
-                        biblioteca.getGestorLibros().nuevoLibro(new Libro(titulo, autor, Categoria.VIAJES, EstadoLibro.DISPONIBLE));
-                    }else if (categoria.equals("TECNOLOGIA")) {
-                        biblioteca.getGestorLibros().nuevoLibro(new Libro(titulo, autor, Categoria.TECNOLOGIA, EstadoLibro.DISPONIBLE));
-                    }else if (categoria.equals("NEGOCIOS")) {
-                        biblioteca.getGestorLibros().nuevoLibro(new Libro(titulo, autor, Categoria.NEGOCIOS, EstadoLibro.DISPONIBLE));
-                    }else if (categoria.equals("DEPORTES")) {
-                        biblioteca.getGestorLibros().nuevoLibro(new Libro(titulo, autor, Categoria.DEPORTES, EstadoLibro.DISPONIBLE));
-                    }
-                }
-                case 5 -> System.out.println();
+                case 4 -> {agregarLibro(biblioteca);}
+                case 5 -> {eliminarLibro(biblioteca);}
                 case 6 -> {
                     System.out.println("Dime el nombre de usuario");
                     String nombre = sc.nextLine();
@@ -221,12 +161,12 @@ public class Biblioteca {
                 case 8 -> System.out.println();
                 case 9 -> System.out.println();
                 case 10 -> System.out.println();
-                case 11 -> System.out.println("Saliendo del programa..."+
-                "\nGracias por confiar en Byte & Books");
+                case 11 -> System.out.println("Saliendo al menu principal...");
                 default -> System.out.println("Opcion no valida");
             }
         }while(opcion !=11); 
     }
+
     public static String ImprimirBuscarLibros(){
         String tVerde = "\u001B[32m";
         String fBlanco = "\u001B[32;40m";
@@ -309,4 +249,54 @@ public class Biblioteca {
             }
         }
     }
+
+    //NOTA: Estas 2 funciones las usaremos para el caso 4 del menu del admin
+
+    //1
+private static void agregarLibro(Biblioteca biblioteca) {
+    System.out.println("Dime el titulo");
+    String titulo = sc.nextLine();
+    System.out.println("Dime el autor");
+    String autor = sc.nextLine();
+    System.out.println("Dime la categoria");
+    String categoria = sc.nextLine().toUpperCase(); 
+
+    if (esCategoriaValida(categoria)) {
+        Categoria categoriaEnum = Categoria.valueOf(categoria); 
+        biblioteca.getGestorLibros().nuevoLibro(new Libro(titulo, autor, categoriaEnum, EstadoLibro.DISPONIBLE));
+        System.out.println("Libro agregado correctamente.");
+    } else {
+        System.out.println("Categoría no válida.");
+    }
 }
+
+// 2
+private static boolean esCategoriaValida(String categoria) {
+    for (Categoria c : Categoria.values()) { 
+        if (c.name().equals(categoria)) {
+            return true; 
+        }
+    }
+    return false; 
+}
+
+private static void eliminarLibro(Biblioteca biblioteca) {
+    System.out.println("Dime el título del libro que deseas eliminar:");
+    String titulo = sc.nextLine(); // Solo obtenemos el título sin hacer modificaciones
+
+    // Llamamos al método del gestor de libros para eliminar el libro
+    boolean eliminado = biblioteca.getGestorLibros().eliminarLibro(titulo);
+
+    System.out.println(titulo);
+
+    // Mostramos un mensaje dependiendo del resultado
+    if (eliminado) {
+        System.out.println("Libro eliminado correctamente.");
+    } else {
+        System.out.println("No se encontró un libro con ese título.");
+    }
+}
+
+
+
+}//Cierre final
