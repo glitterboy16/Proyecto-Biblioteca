@@ -31,11 +31,11 @@ public class Biblioteca {
         biblioteca.getGestorLibros().nuevoLibro(new Libro("El codigo da vinci", "Dan Brown", Categoria.TERROR, EstadoLibro.DISPONIBLE));
         biblioteca.getGestorLibros().nuevoLibro(new Libro("El alquimista", "Paulo Coelho", Categoria.AUTOAYUDA, EstadoLibro.DISPONIBLE));
         biblioteca.getGestorLibros().nuevoLibro(new Libro("El principito", "Antoine de Saint-Exupery", Categoria.INFANTIL, EstadoLibro.DISPONIBLE));
-        biblioteca.getGestorLibros().nuevoLibro(new Libro("Cien anios de soledad", "Gabriel Garcia Marquez", Categoria.FICCION, EstadoLibro.DISPONIBLE));
-        biblioteca.getGestorLibros().nuevoLibro(new Libro("Don Quijote de la Mancha", "Miguel de Cervantes", Categoria.HISTORIA, EstadoLibro.DISPONIBLE));
-        biblioteca.getGestorLibros().nuevoLibro(new Libro("La sombra del viento", "Carlos Ruiz Zafon", Categoria.MISTERIO, EstadoLibro.DISPONIBLE));
-        biblioteca.getGestorLibros().nuevoLibro(new Libro("El nombre del viento", "Patrick Rothfuss", Categoria.FANTASIA, EstadoLibro.DISPONIBLE));
-        biblioteca.getGestorLibros().nuevoLibro(new Libro("La ladrona de libros", "Markus Zusak", Categoria.HISTORIA, EstadoLibro.DISPONIBLE));
+        biblioteca.getGestorLibros().nuevoLibro(new Libro("Cien anios de soledad", "Gabriel Garcia Marquez", Categoria.FICCION, EstadoLibro.PRESTADO));
+        biblioteca.getGestorLibros().nuevoLibro(new Libro("Don Quijote de la Mancha", "Miguel de Cervantes", Categoria.HISTORIA, EstadoLibro.PRESTADO));
+        biblioteca.getGestorLibros().nuevoLibro(new Libro("La sombra del viento", "Carlos Ruiz Zafon", Categoria.MISTERIO, EstadoLibro.PRESTADO));
+        biblioteca.getGestorLibros().nuevoLibro(new Libro("El nombre del viento", "Patrick Rothfuss", Categoria.FANTASIA, EstadoLibro.PRESTADO));
+        biblioteca.getGestorLibros().nuevoLibro(new Libro("La ladrona de libros", "Markus Zusak", Categoria.HISTORIA, EstadoLibro.PRESTADO));
         biblioteca.getGestor().usuarioNuevo(new Usuarios("Angel", "1234", TipoUsuario.ADMIN));
         biblioteca.getGestor().usuarioNuevo(new Usuarios("Pablo", "1234", TipoUsuario.ADMIN));
         biblioteca.getGestor().usuarioNuevo(new Usuarios("Jose", "1234", TipoUsuario.USER));
@@ -148,7 +148,7 @@ public class Biblioteca {
                 case 4 -> {agregarLibro(biblioteca);}
                 case 5 -> {eliminarLibro(biblioteca);}
                 case 6 -> {registrarNuevoUsuario(biblioteca);}
-                case 7 -> System.out.println();
+                case 7 -> {mostrarTodosLibrosPrestados(biblioteca);}
                 case 8 -> System.out.println();
                 case 9 -> System.out.println();
                 case 10 -> System.out.println();
@@ -224,7 +224,7 @@ public class Biblioteca {
     }
 
     public static void mostrarTodosLibrosDisponibles(Biblioteca biblioteca) {
-        Libro[] libros = biblioteca.getGestorLibros().getLibrosArray(); // Obtener el array de libros desde el gestor
+        Libro[] libros = biblioteca.getGestorLibros().getLibrosArray(); // Obtener el array de libros desde el gestor QUE ES MUUUUUY IMPORTANTE
     
         if (libros == null || libros.length == 0) {
             System.out.println("No hay libros disponibles en la biblioteca.");
@@ -236,6 +236,28 @@ public class Biblioteca {
             if (libro != null && libro.getEstado() == EstadoLibro.DISPONIBLE) {
                 System.out.println("Título: " + libro.getTitulo() + ", Autor: " + libro.getAutor() + ", Categoría: " + libro.getCategoria());
             }
+        }
+    }
+
+    public static void mostrarTodosLibrosPrestados(Biblioteca biblioteca) {
+        Libro[] libros = biblioteca.getGestorLibros().getLibrosArray();
+    
+        if (libros == null || libros.length == 0) {
+            System.out.println("No hay libros en la biblioteca.");
+            return;
+        }
+    
+        System.out.println("Libros prestados:");
+        boolean hayPrestados = false; 
+        for (Libro libro : libros) {
+            if (libro != null && libro.getEstado() == EstadoLibro.PRESTADO) {
+                System.out.println("Título: " + libro.getTitulo() + ", Autor: " + libro.getAutor() + ", Categoría: " + libro.getCategoria());
+                hayPrestados = true;
+            }
+        }
+    
+        if (!hayPrestados) {
+            System.out.println("No hay libros prestados en este momento.");
         }
     }
 
