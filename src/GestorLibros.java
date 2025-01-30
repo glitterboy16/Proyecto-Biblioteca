@@ -166,6 +166,25 @@ public class GestorLibros {
      * @return el array de libros.
      */
     public Libro[] getLibrosArray() {
-        return Arrays.copyOf(libros, lleno); // Devuelve una copia del array sin espacios nulos
+        return Arrays.copyOf(libros, lleno); 
+    }
+
+    public boolean realizarPrestamo(String titulo) {
+        int indice = buscarIndiceLibro(titulo);
+        if (indice != -1 && libros[indice].getEstado() == EstadoLibro.DISPONIBLE) {
+            libros[indice].setEstado(EstadoLibro.PRESTADO);
+            libros[indice].incrementarContadorPrestamos();
+            return true; 
+        }
+        return false;
+    }
+    
+    public boolean devolverLibro(String titulo) {
+        int indice = buscarIndiceLibro(titulo);
+        if (indice != -1 && libros[indice].getEstado() == EstadoLibro.PRESTADO) {
+            libros[indice].setEstado(EstadoLibro.DISPONIBLE);
+            return true; 
+        }
+        return false; 
     }
 }

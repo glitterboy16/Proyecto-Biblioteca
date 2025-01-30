@@ -8,6 +8,7 @@ public class Libro {
     private String autor;
     private Categoria categoria;
     private EstadoLibro estado;
+    private int contadorPrestamos;
 
 
     /**
@@ -22,6 +23,7 @@ public class Libro {
             this.autor = autor;
             this.categoria = categoria;
             this.estado = estado;
+            this.contadorPrestamos = 0;
     }
 
     /**
@@ -90,4 +92,12 @@ public class Libro {
     }
 
     //Gestion de libros
+
+    public int getContadorPrestamos() {
+        return contadorPrestamos;
+    }
+
+    public void incrementarContadorPrestamos() {
+        this.contadorPrestamos++;
+    }
 }

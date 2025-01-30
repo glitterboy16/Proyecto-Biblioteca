@@ -1,13 +1,24 @@
+
 import java.lang.reflect.GenericSignatureFormatError;
 import java.util.Scanner;
 public class Biblioteca {
     public static final Scanner sc = new Scanner(System.in);
     GestorUsuarios gestor = new GestorUsuarios();
     GestorLibros gestorLibros = new GestorLibros();
+    
     public Biblioteca(GestorUsuarios gestor, GestorLibros gestorLibros) {
         this.gestor = gestor;
         this.gestorLibros = gestorLibros;
     }
+
+    public boolean realizarPrestamo(String titulo) {
+        return gestorLibros.realizarPrestamo(titulo);
+    }
+    
+    public boolean realizarDevolucion(String titulo) {
+        return gestorLibros.devolverLibro(titulo);
+    }
+
     public GestorUsuarios getGestor() {
         return gestor;
     }
@@ -20,6 +31,11 @@ public class Biblioteca {
     public void setGestorLibros(GestorLibros gestorLibros) {
         this.gestorLibros = gestorLibros;
     }
+
+        // Método para obtener el array de libros
+        public Libro[] getLibrosArray() {
+            return gestorLibros.getLibrosArray(); // Asegúrate de que GestorLibros tenga este método
+        }
 
     public static void main(String[] args) throws Exception {
         Biblioteca biblioteca = new Biblioteca(new GestorUsuarios(), new GestorLibros());
@@ -97,6 +113,11 @@ public class Biblioteca {
                             + "----------------------------------------------------------------\n"
                             + "Elija una opción:\n" + reset;
         return menu;
+
+        /*Mostrar libros prestados, Mostrar numero de prestamos totales y activos, Lista de libros mas prestados
+         * y claro, estoy pensando en poner un atributo contadorP y luego hacer una función que sume todos los contadoresP de
+         * los objetos existentes para poder dar el case 9 Lista de libros mas prestados
+        */
     }
     public static String ImprimirMenuUser(){
         String tVerde = "\u001B[32m";
@@ -144,7 +165,15 @@ public class Biblioteca {
             switch(opcion){
                 case 1 -> System.out.println();
                 case 2 -> {mostrarTodosLibrosDisponibles(biblioteca);}
-                case 3 -> System.out.println();
+                case 3 -> {
+                    System.out.println("Dime el título del libro que deseas prestar:");
+                    String tituloPrestamo = sc.nextLine();
+                    if (biblioteca.getGestorLibros().realizarPrestamo(tituloPrestamo)) {
+                        System.out.println("Préstamo realizado con éxito.");
+                    } else {
+                        System.out.println("El libro no está disponible para préstamo.");
+                    }
+                }
                 case 4 -> {agregarLibro(biblioteca);}
                 case 5 -> {eliminarLibro(biblioteca);}
                 case 6 -> {registrarNuevoUsuario(biblioteca);}
