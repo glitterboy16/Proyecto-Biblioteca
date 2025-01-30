@@ -17,7 +17,7 @@ public class Libro {
      * @param autor      el autor del libro.
      * @param categoria  la categoria del libro.
      */
-    public Libro(String titulo, String autor, Categoria categoria){
+    public Libro(String titulo, String autor, Categoria categoria, EstadoLibro estado){
             this.titulo = titulo;
             this.autor = autor;
             this.categoria = categoria;
@@ -72,6 +72,12 @@ public class Libro {
     public void setCategorias(Categoria categoria){
         this.categoria = categoria;
     }
+    public EstadoLibro getEstado(){
+        return estado;
+    }
+    public void setEstado(EstadoLibro estado){
+        this.estado = estado;
+    }
 
     /**
      * Devuelve una representación en cadena del libro.
@@ -80,7 +86,7 @@ public class Libro {
      */
     @Override
     public String toString(){
-        return "Titulo: " + titulo + "\nAutor: " + autor + "\nCategoria: " + categoria;
+        return "Titulo: " + titulo + "\nAutor: " + autor + "\nCategoria: " + categoria + "\nEstado: " + estado;
     }
 
     //Gestion de libros
