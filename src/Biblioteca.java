@@ -23,6 +23,7 @@ public class Biblioteca {
 
     public static void main(String[] args) throws Exception {
         Biblioteca biblioteca = new Biblioteca(new GestorUsuarios(), new GestorLibros());
+        
 
         
         biblioteca.getGestorLibros().nuevoLibro(new Libro("El senor de los anillos", "J.R.R. Tolkien", Categoria.FANTASIA, EstadoLibro.DISPONIBLE));
@@ -39,17 +40,18 @@ public class Biblioteca {
         biblioteca.getGestor().usuarioNuevo(new Usuarios("Pablo", "1234", TipoUsuario.ADMIN));
         biblioteca.getGestor().usuarioNuevo(new Usuarios("Jose", "1234", TipoUsuario.USER));
         biblioteca.getGestor().usuarioNuevo(new Usuarios("Marta", "rodasbichogrande", TipoUsuario.USER));
+        biblioteca.getGestor().usuarioNuevo(new Usuarios("Dahiana", "angel123", TipoUsuario.ADMIN));
 
-        biblioteca.menuPrincipal(biblioteca.getGestor());
+        biblioteca.menuPrincipal(biblioteca.getGestor(), biblioteca.getGestorLibros());
     }
 
-    public void menuPrincipal(GestorUsuarios gestor){
+    public void menuPrincipal(GestorUsuarios gestor, GestorLibros gestorL){
         int opcion;
         do{
             System.out.println(menu());
             opcion = Integer.parseInt(sc.nextLine());
             switch(opcion){
-                case 1 -> menuInicioSesion(gestor);
+                case 1 -> menuInicioSesion(gestor, gestorL);
                 case 2 -> System.out.println("Saliendo del programa..."+
                 "\nGracias por confiar en Byte & Books");
                 default -> System.out.println("Opcion no valida");
@@ -114,49 +116,38 @@ public class Biblioteca {
                             + "Elija una opción:\n" + reset;
         return menu;
     }  
-    public static void menuInicioSesion(GestorUsuarios gestor){
+
+    public static void menuInicioSesion(GestorUsuarios gestor, GestorLibros gestorLibros) {
         System.out.println("Dame tu nombre de usuario");
         String nombreini = sc.nextLine();
         System.out.println("Dime tu contraseña");
         String contrasenaini = sc.nextLine();
         Usuarios usuinisesion = gestor.inicioSesionUsuarios(nombreini, contrasenaini);
-        if (usuinisesion!=null) {
-            if (usuinisesion.getTipoUsuario()==TipoUsuario.ADMIN) {
-            
-            Biblioteca biblioteca = new Biblioteca(gestor, new GestorLibros());
-            
-            menuAdmin(biblioteca, null);
-            }else{
-                System.out.println(ImprimirMenuUser());
+        if (usuinisesion != null) {
+            System.out.println("Inicio de sesión exitoso como: " + usuinisesion.getNombreUsuario());
+            if (usuinisesion.getTipoUsuario() == TipoUsuario.ADMIN) {
+                Biblioteca biblioteca = new Biblioteca(gestor, gestorLibros);
+                menuAdmin(biblioteca);
+            } else {
+                System.out.println(ImprimirMenuUser ());
             }
-        }else{
-            System.out.println("ta mal");
+        } else {
+            System.out.println("Usuario o contraseña incorrectos.");
         }
     }
-    public static void menuAdmin(Biblioteca biblioteca, Libro libro){
+
+    public static void menuAdmin(Biblioteca biblioteca){
         int opcion;
         do{
             System.out.println(ImprimirMenuAdmin());
             opcion = Integer.parseInt(sc.nextLine());
             switch(opcion){
                 case 1 -> System.out.println();
-                case 2 -> System.out.println();
+                case 2 -> {mostrarTodosLibrosDisponibles(biblioteca);}
                 case 3 -> System.out.println();
                 case 4 -> {agregarLibro(biblioteca);}
                 case 5 -> {eliminarLibro(biblioteca);}
-                case 6 -> {
-                    System.out.println("Dime el nombre de usuario");
-                    String nombre = sc.nextLine();
-                    System.out.println("Dime la contraseña");
-                    String contrasena = sc.nextLine();
-                    System.out.println("Dime el tipo de usuario");
-                    String tipo = sc.nextLine();
-                    if (tipo.equals("ADMIN")) {
-                        biblioteca.getGestor().usuarioNuevo(new Usuarios(nombre, contrasena, TipoUsuario.ADMIN));
-                    }else if (tipo.equals("USER")) {
-                        biblioteca.getGestor().usuarioNuevo(new Usuarios(nombre, contrasena, TipoUsuario.USER));
-                    }
-                }
+                case 6 -> {registrarNuevoUsuario(biblioteca);}
                 case 7 -> System.out.println();
                 case 8 -> System.out.println();
                 case 9 -> System.out.println();
@@ -232,16 +223,14 @@ public class Biblioteca {
         }while(opcion !=4); 
     }
 
-    public void mostrarTodosLibrosDisponibles(GestorLibros gestorLibros){ 
-        Libro[] libros = gestorLibros.getLibrosArray(); 
+    public static void mostrarTodosLibrosDisponibles(Biblioteca biblioteca) {
+        Libro[] libros = biblioteca.getGestorLibros().getLibrosArray(); // Obtener el array de libros desde el gestor
     
-        
         if (libros == null || libros.length == 0) {
             System.out.println("No hay libros disponibles en la biblioteca.");
             return;
         }
     
-        
         System.out.println("Libros disponibles:");
         for (Libro libro : libros) {
             if (libro != null && libro.getEstado() == EstadoLibro.DISPONIBLE) {
@@ -297,6 +286,26 @@ private static void eliminarLibro(Biblioteca biblioteca) {
     }
 }
 
+private static void registrarNuevoUsuario(Biblioteca biblioteca) {
+    System.out.println("Dime el nombre de usuario:");
+    String nombre = sc.nextLine();
+    System.out.println("Dime la contraseña:");
+    String contrasena = sc.nextLine();
+    System.out.println("Dime el tipo de usuario (ADMIN/USER):");
+    String tipo = sc.nextLine().toUpperCase();
 
+    TipoUsuario tipoUsuario;
+    if (tipo.equals("ADMIN")) {
+        tipoUsuario = TipoUsuario.ADMIN;
+    } else if (tipo.equals("USER")) {
+        tipoUsuario = TipoUsuario.USER;
+    } else {
+        System.out.println("Tipo de usuario no válido. Debe ser ADMIN o USER.");
+        return; // Salir del método si el tipo no es válido
+    }
+
+    biblioteca.getGestor().usuarioNuevo(new Usuarios(nombre, contrasena, tipoUsuario));
+    System.out.println("Usuario registrado correctamente.");
+}
 
 }//Cierre final
