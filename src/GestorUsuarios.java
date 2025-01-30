@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 public class GestorUsuarios {
     private static Usuarios [] usuarios;
     private static final int tam = 100;
@@ -19,7 +21,7 @@ public class GestorUsuarios {
     public int buscarIndiceUsuarios(String nombre) {
         int buscar = -1;
         for (int i = 0; i < lleno && buscar == -1; i++) {
-            if (this.usuarios[i].getNombreUsuario().equals(nombre)) {
+            if (usuarios[i].getNombreUsuario().equals(nombre)) {
                 buscar = i;
             }
         }
@@ -32,6 +34,17 @@ public class GestorUsuarios {
             buscar = usuarios[indice];
         }
         return buscar;
+    }
+    public Usuarios[] buscarPorTipo(TipoUsuario tipo) {
+        Usuarios[] result = new Usuarios[tam];
+        int tamTipo = 0;
+        for (int i = 0; i < lleno; i++) {
+            if (usuarios[i].getTipoUsuario().equals(tipo)) {
+                result[tamTipo] = usuarios[i];
+                tamTipo++;
+            }
+        }
+        return Arrays.copyOf(result, tamTipo);
     }
     public Usuarios inicioSesionUsuarios(String nombreUsuario, String contrasena){
         Usuarios usuario = buscarNombreUsuario(nombreUsuario);
@@ -58,6 +71,10 @@ public class GestorUsuarios {
             stringUsuarios += usuarios[i].toString() + "\n";
         }
         return stringUsuarios;
+    }
+
+    public Usuarios[] getUsuariosArray() {
+        return Arrays.copyOf(usuarios, lleno); 
     }
 
 }

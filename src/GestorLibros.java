@@ -159,7 +159,7 @@ public class GestorLibros {
         }
         return stringLibro;
     }
-
+                    
     /**
      * Devuelve el array de libros.
      * 
