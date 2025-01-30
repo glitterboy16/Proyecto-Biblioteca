@@ -113,7 +113,7 @@ public class GestorLibros {
             for (int i = indice; i < lleno - 1; i++) {
                 libros[i] = libros[i + 1];
             }
-            libros[--lleno] = null;      //Operador de predecremento -> primero se decrementa la variable lleno y luego se utiliza como el índice
+            libros[--lleno] = null;      
             return true;
         } else {
             return false;
