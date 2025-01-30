@@ -23,32 +23,35 @@ public class Biblioteca {
 
     public static void main(String[] args) throws Exception {
         Biblioteca biblioteca = new Biblioteca(new GestorUsuarios(), new GestorLibros());
-        //biblioteca.menuPrincipal(biblioteca.gestor);
-        //biblioteca.menuBuscarLibros(biblioteca.gestorLibros); 
-        biblioteca.mostrarTodosLibrosDisponibles(biblioteca.gestorLibros);
+        
+
+        
         biblioteca.getGestorLibros().nuevoLibro(new Libro("El senor de los anillos", "J.R.R. Tolkien", Categoria.FANTASIA, EstadoLibro.DISPONIBLE));
         biblioteca.getGestorLibros().nuevoLibro(new Libro("El hobbit", "J.R.R. Tolkien", Categoria.FANTASIA, EstadoLibro.DISPONIBLE));
         biblioteca.getGestorLibros().nuevoLibro(new Libro("El codigo da vinci", "Dan Brown", Categoria.TERROR, EstadoLibro.DISPONIBLE));
         biblioteca.getGestorLibros().nuevoLibro(new Libro("El alquimista", "Paulo Coelho", Categoria.AUTOAYUDA, EstadoLibro.DISPONIBLE));
         biblioteca.getGestorLibros().nuevoLibro(new Libro("El principito", "Antoine de Saint-Exupery", Categoria.INFANTIL, EstadoLibro.DISPONIBLE));
-        biblioteca.getGestorLibros().nuevoLibro(new Libro("Cien años de soledad", "Gabriel Garcia Marquez", Categoria.FICCION, EstadoLibro.DISPONIBLE));
-        biblioteca.getGestorLibros().nuevoLibro(new Libro("Don Quijote de la Mancha", "Miguel de Cervantes", Categoria.HISTORIA, EstadoLibro.DISPONIBLE));
-        biblioteca.getGestorLibros().nuevoLibro(new Libro("La sombra del viento", "Carlos Ruiz Zafon", Categoria.MISTERIO, EstadoLibro.DISPONIBLE));
-        biblioteca.getGestorLibros().nuevoLibro(new Libro("El nombre del viento", "Patrick Rothfuss", Categoria.FANTASIA, EstadoLibro.DISPONIBLE));
-        biblioteca.getGestorLibros().nuevoLibro(new Libro("La ladrona de libros", "Markus Zusak", Categoria.HISTORIA, EstadoLibro.DISPONIBLE));
+        biblioteca.getGestorLibros().nuevoLibro(new Libro("Cien anios de soledad", "Gabriel Garcia Marquez", Categoria.FICCION, EstadoLibro.PRESTADO));
+        biblioteca.getGestorLibros().nuevoLibro(new Libro("Don Quijote de la Mancha", "Miguel de Cervantes", Categoria.HISTORIA, EstadoLibro.PRESTADO));
+        biblioteca.getGestorLibros().nuevoLibro(new Libro("La sombra del viento", "Carlos Ruiz Zafon", Categoria.MISTERIO, EstadoLibro.PRESTADO));
+        biblioteca.getGestorLibros().nuevoLibro(new Libro("El nombre del viento", "Patrick Rothfuss", Categoria.FANTASIA, EstadoLibro.PRESTADO));
+        biblioteca.getGestorLibros().nuevoLibro(new Libro("La ladrona de libros", "Markus Zusak", Categoria.HISTORIA, EstadoLibro.PRESTADO));
         biblioteca.getGestor().usuarioNuevo(new Usuarios("Angel", "1234", TipoUsuario.ADMIN));
         biblioteca.getGestor().usuarioNuevo(new Usuarios("Pablo", "1234", TipoUsuario.ADMIN));
         biblioteca.getGestor().usuarioNuevo(new Usuarios("Jose", "1234", TipoUsuario.USER));
         biblioteca.getGestor().usuarioNuevo(new Usuarios("Marta", "rodasbichogrande", TipoUsuario.USER));
+        biblioteca.getGestor().usuarioNuevo(new Usuarios("Dahiana", "angel123", TipoUsuario.ADMIN));
+
+        biblioteca.menuPrincipal(biblioteca.getGestor(), biblioteca.getGestorLibros());
     }
 
-    public void menuPrincipal(GestorUsuarios gestor){
+    public void menuPrincipal(GestorUsuarios gestor, GestorLibros gestorL){
         int opcion;
         do{
             System.out.println(menu());
             opcion = Integer.parseInt(sc.nextLine());
             switch(opcion){
-                case 1 -> menuInicioSesion(gestor);
+                case 1 -> menuInicioSesion(gestor, gestorL);
                 case 2 -> System.out.println("Saliendo del programa..."+
                 "\nGracias por confiar en Byte & Books");
                 default -> System.out.println("Opcion no valida");
@@ -112,31 +115,36 @@ public class Biblioteca {
                             + "Elija una opción:\n" + reset;
         return menu;
     }  
-    public static void menuInicioSesion(GestorUsuarios gestor){
+
+    public static void menuInicioSesion(GestorUsuarios gestor, GestorLibros gestorLibros) {
         System.out.println("Dame tu nombre de usuario");
         String nombreini = sc.nextLine();
         System.out.println("Dime tu contraseña");
         String contrasenaini = sc.nextLine();
         Usuarios usuinisesion = gestor.inicioSesionUsuarios(nombreini, contrasenaini);
-        if (usuinisesion!=null) {
-            if (usuinisesion.getTipoUsuario()==TipoUsuario.ADMIN) {
-                System.out.println(ImprimirMenuAdmin());
-            }else{
-                System.out.println(ImprimirMenuUser());
+        if (usuinisesion != null) {
+            System.out.println("Inicio de sesión exitoso como: " + usuinisesion.getNombreUsuario());
+            if (usuinisesion.getTipoUsuario() == TipoUsuario.ADMIN) {
+                Biblioteca biblioteca = new Biblioteca(gestor, gestorLibros);
+                menuAdmin(biblioteca);
+            } else {
+                System.out.println(ImprimirMenuUser ());
             }
-        }else{
-            System.out.println("ta mal");
+        } else {
+            System.out.println("Usuario o contraseña incorrectos.");
         }
     }
-    public static void menuAdmin(Biblioteca biblioteca, Libro libro){
+
+    public static void menuAdmin(Biblioteca biblioteca){
         int opcion;
         do{
-            System.out.println(menu());
+            System.out.println(ImprimirMenuAdmin());
             opcion = Integer.parseInt(sc.nextLine());
             switch(opcion){
                 case 1 -> System.out.println();
-                case 2 -> System.out.println();
+                case 2 -> {mostrarTodosLibrosDisponibles(biblioteca);}
                 case 3 -> System.out.println();
+<<<<<<< HEAD
                 case 4 -> {
                     System.out.println("Dime el titulo");
                     String titulo = sc.nextLine();
@@ -217,15 +225,21 @@ public class Biblioteca {
                     }
                 }
                 case 7 -> System.out.println();
+=======
+                case 4 -> {agregarLibro(biblioteca);}
+                case 5 -> {eliminarLibro(biblioteca);}
+                case 6 -> {registrarNuevoUsuario(biblioteca);}
+                case 7 -> {mostrarTodosLibrosPrestados(biblioteca);}
+>>>>>>> origin/ramaIntermedia
                 case 8 -> System.out.println();
                 case 9 -> System.out.println();
                 case 10 -> System.out.println();
-                case 11 -> System.out.println("Saliendo del programa..."+
-                "\nGracias por confiar en Byte & Books");
+                case 11 -> System.out.println("Saliendo al menu principal...");
                 default -> System.out.println("Opcion no valida");
             }
         }while(opcion !=11); 
     }
+
     public static String ImprimirBuscarLibros(){
         String tVerde = "\u001B[32m";
         String fBlanco = "\u001B[32;40m";
@@ -290,16 +304,20 @@ public class Biblioteca {
             }
         }while(opcion !=4); 
     }
+<<<<<<< HEAD
     public void mostrarTodosLibrosDisponibles(GestorLibros gestorLibros){ 
         Libro[] libros = gestorLibros.getLibrosArray(); 
+=======
+
+    public static void mostrarTodosLibrosDisponibles(Biblioteca biblioteca) {
+        Libro[] libros = biblioteca.getGestorLibros().getLibrosArray(); // Obtener el array de libros desde el gestor QUE ES MUUUUUY IMPORTANTE
+>>>>>>> origin/ramaIntermedia
     
-        
         if (libros == null || libros.length == 0) {
             System.out.println("No hay libros disponibles en la biblioteca.");
             return;
         }
     
-        
         System.out.println("Libros disponibles:");
         for (Libro libro : libros) {
             if (libro != null && libro.getEstado() == EstadoLibro.DISPONIBLE) {
@@ -307,4 +325,96 @@ public class Biblioteca {
             }
         }
     }
+
+    public static void mostrarTodosLibrosPrestados(Biblioteca biblioteca) {
+        Libro[] libros = biblioteca.getGestorLibros().getLibrosArray();
+    
+        if (libros == null || libros.length == 0) {
+            System.out.println("No hay libros en la biblioteca.");
+            return;
+        }
+    
+        System.out.println("Libros prestados:");
+        boolean hayPrestados = false; 
+        for (Libro libro : libros) {
+            if (libro != null && libro.getEstado() == EstadoLibro.PRESTADO) {
+                System.out.println("Título: " + libro.getTitulo() + ", Autor: " + libro.getAutor() + ", Categoría: " + libro.getCategoria());
+                hayPrestados = true;
+            }
+        }
+    
+        if (!hayPrestados) {
+            System.out.println("No hay libros prestados en este momento.");
+        }
+    }
+
+    //NOTA: Estas 2 funciones las usaremos para el caso 4 del menu del admin
+
+    //1
+private static void agregarLibro(Biblioteca biblioteca) {
+    System.out.println("Dime el titulo");
+    String titulo = sc.nextLine();
+    System.out.println("Dime el autor");
+    String autor = sc.nextLine();
+    System.out.println("Dime la categoria");
+    String categoria = sc.nextLine().toUpperCase(); 
+
+    if (esCategoriaValida(categoria)) {
+        Categoria categoriaEnum = Categoria.valueOf(categoria); 
+        biblioteca.getGestorLibros().nuevoLibro(new Libro(titulo, autor, categoriaEnum, EstadoLibro.DISPONIBLE));
+        System.out.println("Libro agregado correctamente.");
+    } else {
+        System.out.println("Categoría no válida.");
+    }
 }
+
+// 2
+private static boolean esCategoriaValida(String categoria) {
+    for (Categoria c : Categoria.values()) { 
+        if (c.name().equals(categoria)) {
+            return true; 
+        }
+    }
+    return false; 
+}
+
+private static void eliminarLibro(Biblioteca biblioteca) {
+    System.out.println("Dime el título del libro que deseas eliminar:");
+    String titulo = sc.nextLine(); // Solo obtenemos el título sin hacer modificaciones
+
+    // Llamamos al método del gestor de libros para eliminar el libro
+    boolean eliminado = biblioteca.getGestorLibros().eliminarLibro(titulo);
+
+    System.out.println(titulo);
+
+    // Mostramos un mensaje dependiendo del resultado
+    if (eliminado) {
+        System.out.println("Libro eliminado correctamente.");
+    } else {
+        System.out.println("No se encontró un libro con ese título.");
+    }
+}
+
+private static void registrarNuevoUsuario(Biblioteca biblioteca) {
+    System.out.println("Dime el nombre de usuario:");
+    String nombre = sc.nextLine();
+    System.out.println("Dime la contraseña:");
+    String contrasena = sc.nextLine();
+    System.out.println("Dime el tipo de usuario (ADMIN/USER):");
+    String tipo = sc.nextLine().toUpperCase();
+
+    TipoUsuario tipoUsuario;
+    if (tipo.equals("ADMIN")) {
+        tipoUsuario = TipoUsuario.ADMIN;
+    } else if (tipo.equals("USER")) {
+        tipoUsuario = TipoUsuario.USER;
+    } else {
+        System.out.println("Tipo de usuario no válido. Debe ser ADMIN o USER.");
+        return; // Salir del método si el tipo no es válido
+    }
+
+    biblioteca.getGestor().usuarioNuevo(new Usuarios(nombre, contrasena, tipoUsuario));
+    System.out.println("Usuario registrado correctamente.");
+}
+
+}//Cierre final

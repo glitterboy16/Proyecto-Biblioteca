@@ -4,13 +4,11 @@ public class Usuarios {
     private TipoUsuario tipoUsuario;
     
 
-
     public Usuarios() {
         nombreUsuario = "Manuel";
         contrasena = "1234";
         tipoUsuario = TipoUsuario.ADMIN;
     }
-
 
     public Usuarios(String nombreUsuario, String contraseña, TipoUsuario tipoUsuario) {
         this.nombreUsuario = nombreUsuario;

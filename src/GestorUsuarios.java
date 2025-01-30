@@ -35,17 +35,18 @@ public class GestorUsuarios {
     }
     public Usuarios inicioSesionUsuarios(String nombreUsuario, String contrasena){
         Usuarios usuario = buscarNombreUsuario(nombreUsuario);
-        System.out.println("usuario:"+ usuario);
         if(usuario != null && usuario.getContrasena().equals(contrasena)){
             return usuario;
         }
         return null;
     }
 
-    public static String toString(Usuarios[] arrayUsuarios){
+    public static String toString(Usuarios[] arrayUsuarios) {
         String stringUsuarios = "";
-        for (Usuarios usuarios : arrayUsuarios) {
-            stringUsuarios += usuarios.toString() + "\n";
+        for (Usuarios usuario : arrayUsuarios) {
+            // Concatenar solo la información que deseas mostrar
+            stringUsuarios += "Nombre: " + usuario.getNombreUsuario() + 
+                              ", Tipo: " + usuario.getTipoUsuario() + "\n";
         }
         return stringUsuarios;
     }

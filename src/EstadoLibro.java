@@ -1,3 +1,4 @@
 public enum EstadoLibro {
-    DISPONIBLE, PRESTADO
+    DISPONIBLE,
+    PRESTADO
 }
