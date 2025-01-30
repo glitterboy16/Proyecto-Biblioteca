@@ -159,4 +159,13 @@ public class GestorLibros {
         }
         return stringLibro;
     }
+
+    /**
+     * Devuelve el array de libros.
+     * 
+     * @return el array de libros.
+     */
+    public Libro[] getLibrosArray() {
+        return Arrays.copyOf(libros, lleno); // Devuelve una copia del array sin espacios nulos
+    }
 }
