@@ -59,7 +59,7 @@ public class GestorUsuarios {
         for (Usuarios usuario : arrayUsuarios) {
             // Concatenar solo la información que deseas mostrar
             stringUsuarios += "Nombre: " + usuario.getNombreUsuario() + 
-                              ", Tipo: " + usuario.getTipoUsuario() + "\n";
+                            ", Tipo: " + usuario.getTipoUsuario() + "\n";
         }
         return stringUsuarios;
     }
@@ -75,6 +75,18 @@ public class GestorUsuarios {
 
     public Usuarios[] getUsuariosArray() {
         return Arrays.copyOf(usuarios, lleno); 
+    }
+
+    public void masPrestamosUsu(Usuarios[] usuarios){
+        for (int i = 0; i < usuarios.length; i++) {
+            for (int j = 0; j < usuarios.length-i; j++) {
+                if (usuarios[j].getNumeroDePrestamos() < usuarios[j+1].getNumeroDePrestamos()) {
+                    Usuarios aux = usuarios[j];
+                    usuarios[j] = usuarios[j+1];
+                    usuarios[j+1] = aux;
+                }
+            }
+        }
     }
 
 }
