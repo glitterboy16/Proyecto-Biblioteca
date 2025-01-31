@@ -2,12 +2,15 @@ public class Usuarios {
     private String nombreUsuario;
     private String contrasena;
     private TipoUsuario tipoUsuario;
+    private int numeroDePrestamos;
     
 
     public Usuarios() {
         nombreUsuario = "Manuel";
         contrasena = "1234";
         tipoUsuario = TipoUsuario.ADMIN;
+        this.numeroDePrestamos = 0;
+        
     }
 
     public Usuarios(String nombreUsuario, String contraseña, TipoUsuario tipoUsuario) {
@@ -44,6 +47,20 @@ public class Usuarios {
                 ", Contraseña='" + getContrasena() + "'" +
                 ", TipoUsuario='" + getTipoUsuario() + "'" +
                 "}";
+    }
+
+    public int getNumeroDePrestamos() {
+        return numeroDePrestamos;
+    }
+
+    public void incrementarPrestamos() {
+        this.numeroDePrestamos++;
+    }
+
+    public void decrementarPrestamos() {
+        if (this.numeroDePrestamos > 0) {
+            this.numeroDePrestamos--;
+        }
     }
     
 }
