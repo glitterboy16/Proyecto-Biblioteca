@@ -59,7 +59,7 @@ public class GestorUsuarios {
         for (Usuarios usuario : arrayUsuarios) {
             // Concatenar solo la información que deseas mostrar
             stringUsuarios += "Nombre: " + usuario.getNombreUsuario() + 
-                            ", Tipo: " + usuario.getTipoUsuario() + "\n";
+                              ", Tipo: " + usuario.getTipoUsuario() + "\n";
         }
         return stringUsuarios;
     }
@@ -88,5 +88,6 @@ public class GestorUsuarios {
             }
         }
     }
+
 
 }
