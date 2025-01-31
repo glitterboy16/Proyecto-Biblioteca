@@ -187,4 +187,32 @@ public class GestorLibros {
         }
         return false; 
     }
+
+    public void masPrestados(Libro[] libros){
+        for (int j = 0; j < libros.length; j++) {
+            for (int i = 0; i < libros.length-j; i++) {
+                if(libros[i].getContadorPrestamos()<libros[i+1].getContadorPrestamos()){
+                    Libro intermedia = libros[i];
+                    libros[i] = libros[i+1]; 
+                    libros[i+1] = intermedia;
+                }
+            }
+        }
+        for (int i = 0; i < libros.length; i++) {
+            System.out.println(libros[i]);
+        }
+    }
+
+    public void prestamosActivos(Libro[] libros){
+        for (int i = 0; i < libros.length; i++) {
+            if(libros[i].getEstado() == EstadoLibro.PRESTADO){
+                System.out.println(libros[i]);
+            }
+        }
+    }
+    public void prestamosTotales(Libro[] libros){
+        for (int i = 0; i < libros.length; i++) {
+            System.out.println(libros[i]);
+        }
+    }
 }

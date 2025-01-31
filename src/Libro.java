@@ -88,7 +88,7 @@ public class Libro {
      */
     @Override
     public String toString(){
-        return "Titulo: " + titulo + "\nAutor: " + autor + "\nCategoria: " + categoria + "\nEstado: " + estado;
+        return "Titulo: " + titulo + "\nAutor: " + autor + "\nCategoria: " + categoria + "\nEstado: " + estado + "\nNumero de Prestamos:" + contadorPrestamos;
     }
 
     //Gestion de libros

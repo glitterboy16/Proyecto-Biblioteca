@@ -1,19 +1,12 @@
-<<<<<<< HEAD
-=======
-
-import java.lang.reflect.GenericSignatureFormatError;
->>>>>>> origin/angel-develop
 import java.util.Scanner;
 public class Biblioteca {
     public static final Scanner sc = new Scanner(System.in);
     GestorUsuarios gestor = new GestorUsuarios();
     GestorLibros gestorLibros = new GestorLibros();
-    
     public Biblioteca(GestorUsuarios gestor, GestorLibros gestorLibros) {
         this.gestor = gestor;
         this.gestorLibros = gestorLibros;
     }
-
     public boolean realizarPrestamo(String titulo) {
         return gestorLibros.realizarPrestamo(titulo);
     }
@@ -34,11 +27,9 @@ public class Biblioteca {
     public void setGestorLibros(GestorLibros gestorLibros) {
         this.gestorLibros = gestorLibros;
     }
-
-        // Método para obtener el array de libros
-        public Libro[] getLibrosArray() {
-            return gestorLibros.getLibrosArray(); // Asegúrate de que GestorLibros tenga este método
-        }
+    public Libro[] getLibrosArray() {
+        return gestorLibros.getLibrosArray(); // Asegúrate de que GestorLibros tenga este método
+    }
 
     public static void main(String[] args) throws Exception {
         Biblioteca biblioteca = new Biblioteca(new GestorUsuarios(), new GestorLibros());
@@ -104,12 +95,12 @@ public class Biblioteca {
                             + "|--------------------------------------------------------------|\n"
                             + "|      1. Buscar libros                                        |\n"//hecho 
                             + "|      2. Mostrar los libros disponibles                       |\n"//hecho
-                            + "|      3. Realizar prestamo de libro                           |\n"
+                            + "|      3. Realizar prestamo de libro                           |\n"//hecho
                             + "|      4. Agregar libro                                        |\n"//hecho
                             + "|      5. Eliminar libro                                       |\n"//hecho
                             + "|      6. Registrar nuevos usuarios                            |\n"//hecho
                             + "|      7. Consultar informacion de usuarios                    |\n"//hecho
-                            + "|      8. Devolver libros prestados                            |\n"
+                            + "|      8. Devolver libros prestados                            |\n"//hecho
                             + "|      9. Mostrar libros prestados                             |\n"//hecho
                             + "|      10. Mostrar numero de prestamos totales y activos       |\n"
                             + "|      11. Lista de libros mas prestados                       |\n"
@@ -118,11 +109,6 @@ public class Biblioteca {
                             + "----------------------------------------------------------------\n"
                             + "Elija una opción:\n" + reset;
         return menu;
-
-        /*Mostrar libros prestados, Mostrar numero de prestamos totales y activos, Lista de libros mas prestados
-         * y claro, estoy pensando en poner un atributo contadorP y luego hacer una función que sume todos los contadoresP de
-         * los objetos existentes para poder dar el case 9 Lista de libros mas prestados
-        */
     }
     public static String ImprimirMenuUser(){
         String tVerde = "\u001B[32m";
@@ -172,16 +158,32 @@ public class Biblioteca {
             switch(opcion){
                 case 1 -> {menuBuscarLibros(gestorLibros, biblioteca);}//Buscar libros
                 case 2 -> {mostrarTodosLibrosDisponibles(biblioteca);}//Mostrar libros disponibles
-                case 3 -> System.out.println();//Realizar prestamo de libro
+                case 3 -> {System.out.println("Dime el título del libro que deseas devolver:");
+                String libroaPrestar = sc.nextLine();
+                if (biblioteca.getGestorLibros().realizarPrestamo(libroaPrestar)) {
+                    System.out.println("Libro prestado con exito.");
+                } else {
+                    System.out.println("El libro ya está prestado.");}
+                }//Realizar prestamo de libro
                 case 4 -> {agregarLibro(biblioteca);}// Agregar libros
                 case 5 -> {eliminarLibro(biblioteca);}//Eliminar libros
                 case 6 -> {registrarNuevoUsuario(biblioteca);}//Registrar nuevos usuarios
                 case 7 -> {menuBuscarUsuarios(biblioteca.gestor, biblioteca);}//Consultar informacion de usuarios
-                case 8 -> {}//Devolver libros prestados
+                case 8 -> {
+                    System.out.println("Dime el título del libro que deseas devolver:");
+                String tituloDevolucion = sc.nextLine();
+                if (biblioteca.getGestorLibros().devolverLibro(tituloDevolucion)) {
+                    System.out.println("Devolución realizada con éxito.");
+                } else {
+                    System.out.println("La devolucion no se ha completado.");}
+                }//Devolver libros prestados
                 case 9 -> {mostrarTodosLibrosPrestados(biblioteca);}//Mostrar libros prestados
-                case 10 -> System.out.println();//Mostrar numero de prestamos totales y activos
-                case 11 -> System.out.println();//Lista de libros mas prestados
-                case 12 -> System.out.println();//Mostrar que usuario tiene mas prestamos activos
+                case 10 -> {System.out.println("Los libros con prestamos activos son:" );
+                    biblioteca.getGestorLibros().prestamosActivos(biblioteca.getGestorLibros().getLibrosArray());
+                    System.out.println("Los prestamos totales de los libros son:" );
+                    biblioteca.getGestorLibros().prestamosTotales(biblioteca.getGestorLibros().getLibrosArray());}//Mostrar numero de prestamos totales y activos
+                case 11 -> {biblioteca.getGestorLibros().masPrestados(biblioteca.getGestorLibros().getLibrosArray());}
+                case 12 -> {biblioteca.getGestor().masPrestamosUsu(biblioteca.getGestor().getUsuariosArray());}//Mostrar que usuario tiene mas prestamos activos
                 case 13 -> System.out.println("Saliendo al menu principal...");
                 default -> System.out.println("Opcion no valida");
             }
@@ -196,14 +198,12 @@ public class Biblioteca {
             switch(opcion){
                 case 1 -> {menuBuscarLibros(biblioteca.gestorLibros, biblioteca);}
                 case 2 -> {mostrarTodosLibrosDisponibles(biblioteca);}
-                case 3 -> {
-                    System.out.println("Dime el título del libro que deseas prestar:");
-                    String tituloPrestamo = sc.nextLine();
-                    if (biblioteca.getGestorLibros().realizarPrestamo(tituloPrestamo)) {
-                        System.out.println("Préstamo realizado con éxito.");
-                    } else {
-                        System.out.println("El libro no está disponible para préstamo.");
-                    }
+                case 3 -> {System.out.println("Dime el título del libro que deseas devolver:");
+                String libroaPrestar = sc.nextLine();
+                if (biblioteca.getGestorLibros().realizarPrestamo(libroaPrestar)) {
+                    System.out.println("Libro prestado con exito.");
+                } else {
+                    System.out.println("El libro ya está prestado.");}
                 }
                 case 4 -> {agregarLibro(biblioteca);}
                 case 5 -> System.out.println("Saliendo al menu principal...");
@@ -458,5 +458,6 @@ private static void registrarNuevoUsuario(Biblioteca biblioteca) {
     biblioteca.getGestor().usuarioNuevo(new Usuarios(nombre, contrasena, tipoUsuario));
     System.out.println("Usuario registrado correctamente.");
 }
+
 
 }//Cierre final
