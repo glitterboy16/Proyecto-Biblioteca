@@ -1,3 +1,9 @@
+/**
+ * Esta es una clase de ejemplo.
+ * 
+ * @author Manuel Rodas Y Angel Villorina (Morenito)
+ * @version 175.0
+ */
 import java.util.Scanner;
 public class Biblioteca {
     public static final Scanner sc = new Scanner(System.in);
